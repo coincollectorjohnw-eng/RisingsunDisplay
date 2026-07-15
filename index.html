@@ -38,10 +38,7 @@ video {
 <script>
 
 const API_URL = 
-"https://script.google.com/macros/s/AKfycbyhBuSjJFQn4zrVydoku9ycRvrHB_ePhehm5s2ItLHdHoXtgRTVY9LdnXnTvNPvfkqOqQ/exec";
-
-
-const video = document.getElementById("background-video");
+"https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
 
 
 async function loadVideo(){
@@ -50,21 +47,15 @@ async function loadVideo(){
 
         const response = await fetch(API_URL);
 
-        const videos = await response.json();
+        const data = await response.json();
 
 
-        console.log("Videos received:", videos);
+        const video = document.getElementById(
+            "background-video"
+        );
 
 
-        // Pick a random video
-        const selectedVideo = 
-            videos[Math.floor(Math.random() * videos.length)];
-
-
-        console.log("Playing:", selectedVideo.url);
-
-
-        video.src = selectedVideo.url;
+        video.src = data.url;
 
         video.load();
 
@@ -77,16 +68,6 @@ async function loadVideo(){
             "Failed to load video:",
             error
         );
-
-    }
-
-}
-
-
-loadVideo();
-
-
-</script>
 
     }
 
