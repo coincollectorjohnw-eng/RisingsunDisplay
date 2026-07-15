@@ -1,65 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Loading</title>
 
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+html, body {
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    background:black;
+    overflow:hidden;
+}
 
-    html, body {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: black;
-    }
-
-    #background-video {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-
-        width: 100vw;
-        height: 100vh;
-
-        transform: translate(-50%, -50%);
-
-        object-fit: cover;
-
-        z-index: -1;
-    }
-
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-
-        width: 100%;
-        height: 100%;
-
-        background: rgba(0,0,0,0.15);
-
-        z-index: 0;
-    }
-
-    .content {
-        position: relative;
-
-        width: 100%;
-        height: 100%;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        z-index: 1;
-    }
+video {
+    position:absolute;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
 
 </style>
 
@@ -67,48 +25,9 @@
 
 <body>
 
-<!-- BACKGROUND VIDEO -->
-<video 
-    id="background-video"
-    autoplay
-    muted
-    loop
-    playsinline>
-
-    <source 
-        src="https://cdn.jumpshare.com/preview/uej-LV5XNHMxvrjE10q1xZXEI1Qet2Gwoj0S2kXADBeufi4e8g-6vFWZWVQLnZQW0-j3N6jcB_YXXfPWmJbJJJevlZrUw2ZRgIHeOekgbZ5VCC6HRxinvDgYTcB2KNy5n7W9jpW6UzIFICuYZqoNZv9qTRHSh3i0UQtQ5iWNzOA.mp4"
-        type="video/mp4">
-
+<video autoplay muted loop playsinline>
+    <source src="https://cdn.jumpshare.com/preview/uej-LV5XNHMxvrjE10q1xZXEI1Qet2Gwoj0S2kXADBeufi4e8g-6vFWZWVQLnZQW0-j3N6jcB_YXXfPWmJbJJJevlZrUw2ZRgIHeOekgbZ5VCC6HRxinvDgYTcB2KNy5n7W9jpW6UzIFICuYZqoNZv9qTRHSh3i0UQtQ5iWNzOA.mp4" type="video/mp4">
 </video>
-
-
-<!-- OPTIONAL DARK OVERLAY -->
-<div class="overlay"></div>
-
-
-<!-- OPTIONAL CONTENT -->
-<div class="content">
-
-</div>
-
-
-<script>
-
-const video = document.getElementById("background-video");
-
-// Force autoplay on browsers that block it
-video.play().catch(error => {
-    console.log("Autoplay blocked:", error);
-});
-
-// Restart video if interrupted
-video.addEventListener("ended", () => {
-    video.currentTime = 0;
-    video.play();
-});
-
-</script>
-
 
 </body>
 </html>
