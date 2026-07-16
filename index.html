@@ -37,45 +37,82 @@ video {
 
 <script>
 
-const API_URL = 
+const API_URL =
 "https://script.google.com/macros/s/AKfycbyhBuSjJFQn4zrVydoku9ycRvrHB_ePhehm5s2ItLHdHoXtgRTVY9LdnXnTvNPvfkqOqQ/exec";
 
+const video = document.getElementById("background-video");
 
-async function loadVideo(){
+let retryCount = 0;
+const MAX_RETRIES = 5;
+
+async function loadVideo() {
 
     try {
 
-        const response = await fetch(API_URL);
+        console.log("Loading video...");
+
+        const response = await fetch(API_URL + "?t=" + Date.now(), {
+            cache: "no-store"
+        });
+
+        if (!response.ok)
+            throw new Error("HTTP " + response.status);
 
         const data = await response.json();
 
+        if (!data.url)
+            throw new Error("No video URL returned.");
 
-        const video = document.getElementById(
-            "background-video"
-        );
-
+        console.log("Video:", data.url);
 
         video.src = data.url;
 
         video.load();
 
-        video.play();
+    } catch (err) {
 
+        console.error(err);
 
-    } catch(error) {
-
-        console.error(
-            "Failed to load video:",
-            error
-        );
+        retry();
 
     }
 
 }
 
+video.addEventListener("canplay", () => {
+
+    video.play().catch(err => {
+
+        console.error("Playback failed:", err);
+
+        retry();
+
+    });
+
+});
+
+video.addEventListener("error", () => {
+
+    console.error("Video error");
+
+    retry();
+
+});
+
+function retry() {
+
+    if (retryCount >= MAX_RETRIES)
+        return;
+
+    retryCount++;
+
+    console.log("Retry #" + retryCount);
+
+    setTimeout(loadVideo, 2000);
+
+}
 
 loadVideo();
-
 
 </script>
 
